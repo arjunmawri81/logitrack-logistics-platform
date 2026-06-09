@@ -4,6 +4,7 @@ import "./Navbar.css";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,54 +19,52 @@ const Navbar = () => {
   return (
     <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="container">
-        {/* Logo */}
+
         <div className="logo">
           <h2>LogiTrack</h2>
         </div>
 
-        {/* Navigation */}
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-
-            <li>
-              <Link to="/services">Services</Link>
-            </li>
-
-            <li>
-              <Link to="/tracking">Tracking</Link>
-            </li>
-
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* Buttons */}
-        <div className="nav-actions">
-          <Link to="/login">
-            <button className="login-btn">
-              Login
-            </button>
-          </Link>
-
-          <Link to="/register">
-            <button className="register-btn">
-              Register
-            </button>
-          </Link>
-
-          <button className="quote-btn">
-            Get Quote
-          </button>
+        <div
+          className="menu-toggle"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
         </div>
+
+        <div className={`nav-wrapper ${menuOpen ? "active" : ""}`}>
+
+          <nav>
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/services">Services</Link></li>
+              <li><Link to="/tracking">Tracking</Link></li>
+              <li><Link to="/about">About</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
+            </ul>
+          </nav>
+
+          <div className="nav-actions">
+
+            <Link to="/login">
+              <button className="login-btn">
+                Login
+              </button>
+            </Link>
+
+            <Link to="/register">
+              <button className="register-btn">
+                Register
+              </button>
+            </Link>
+
+            <button className="quote-btn">
+              Get Quote
+            </button>
+
+          </div>
+
+        </div>
+
       </div>
     </header>
   );

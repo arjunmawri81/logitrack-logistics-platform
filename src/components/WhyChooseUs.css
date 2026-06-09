@@ -12,9 +12,9 @@
 
 .why-image img {
   width: 100%;
-  border-radius: 20px;
   height: 650px;
   object-fit: cover;
+  border-radius: 20px;
 }
 
 .section-tag {
@@ -50,24 +50,30 @@
 
 .feature-card h3 {
   margin-bottom: 10px;
+  color: #111827;
 }
 
-.stats {
+/* Rename Stats */
+
+.why-stats {
   display: flex;
   gap: 50px;
   margin-top: 40px;
 }
 
-.stats h3 {
+.why-stats h3 {
   color: #f97316;
   font-size: 32px;
 }
 
-.stats p {
+.why-stats p {
   color: #6b7280;
 }
 
+/* Tablet */
+
 @media (max-width: 992px) {
+
   .why-container {
     grid-template-columns: 1fr;
   }
@@ -75,19 +81,52 @@
   .why-image img {
     height: 450px;
   }
+
+  .why-content h2 {
+    font-size: 36px;
+  }
 }
 
+/* Mobile */
+
 @media (max-width: 768px) {
+
+  .why-section {
+    padding: 70px 5%;
+  }
+
   .features {
     grid-template-columns: 1fr;
   }
 
-  .stats {
+  .why-stats {
     flex-wrap: wrap;
     gap: 25px;
   }
 
   .why-content h2 {
-    font-size: 32px;
+    font-size: 30px;
+  }
+
+  .why-image img {
+    height: 350px;
+  }
+}
+
+/* Small Mobile */
+
+@media (max-width: 480px) {
+
+  .why-content h2 {
+    font-size: 26px;
+  }
+
+  .why-image img {
+    height: 280px;
+  }
+
+  .why-stats {
+    justify-content: center;
+    text-align: center;
   }
 }

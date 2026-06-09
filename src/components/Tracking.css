@@ -43,6 +43,10 @@
   font-size: 16px;
 }
 
+.tracking-form input:focus {
+  border-color: #f97316;
+}
+
 .tracking-form button {
   background: #f97316;
   color: white;
@@ -51,8 +55,63 @@
   border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
+  transition: 0.3s;
 }
 
 .tracking-form button:hover {
   opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Tablet */
+
+@media (max-width: 768px) {
+
+  .tracking-card {
+    padding: 30px 20px;
+  }
+
+  .tracking-card h2 {
+    font-size: 28px;
+  }
+
+  .tracking-form {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tracking-form input {
+    width: 100%;
+  }
+
+  .tracking-form button {
+    width: 100%;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+
+  .tracking-section {
+    margin-top: -50px;
+  }
+
+  .tracking-card {
+    width: 95%;
+    padding: 25px 15px;
+  }
+
+  .tracking-card h2 {
+    font-size: 24px;
+  }
+
+  .tracking-card p {
+    font-size: 14px;
+  }
+
+  .tracking-form input,
+  .tracking-form button {
+    width: 100%;
+  }
 }
