@@ -1,0 +1,43 @@
+.admin-topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:30px;
+}
+
+.admin-topbar h2{
+  color:white;
+  font-size:28px;
+}
+
+.admin-topbar p{
+  color:#cbd5e1;
+}
+
+.topbar-right{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.notification-btn{
+  width:45px;
+  height:45px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  cursor:pointer;
+  font-size:18px;
+}
+
+.admin-profile{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#f97316;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:bold;
+}

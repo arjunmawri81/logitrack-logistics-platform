@@ -1,0 +1,153 @@
+.admin-dashboard {
+  display: flex;
+}
+
+.admin-content {
+  margin-left: 280px;
+  padding: 30px;
+  width: 100%;
+  min-height: 100vh;
+  color: white;
+}
+
+.admin-content h1 {
+  font-size: 48px;
+  margin-bottom: 35px;
+}
+
+/* Cards */
+
+.admin-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.admin-card {
+  background: white;
+  color: #111827;
+  padding: 25px;
+  border-radius: 18px;
+  border-top: 4px solid #f97316;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: 0.3s;
+}
+
+.admin-card:hover {
+  transform: translateY(-5px);
+}
+
+.admin-card h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.admin-card p {
+  font-size: 32px;
+  font-weight: bold;
+  color: #f97316;
+}
+
+/* Table Section */
+
+.admin-table-section {
+  margin-top: 40px;
+}
+
+.admin-table-section h2 {
+  color: white;
+  margin-bottom: 15px;
+}
+
+/* Tables */
+
+.admin-table {
+  width: 100%;
+  background: white;
+  color: black;
+  border-collapse: collapse;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.admin-table thead {
+  background: #f97316;
+  color: white;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 16px;
+  text-align: left;
+}
+
+.admin-table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.admin-table tbody tr:hover {
+  background: #fff7ed;
+}
+
+/* Status */
+
+.active {
+  color: green;
+  font-weight: 600;
+}
+
+.pending {
+  color: #f97316;
+  font-weight: 600;
+}
+
+.blocked {
+  color: red;
+  font-weight: 600;
+}
+
+/* Buttons */
+
+.admin-btn {
+  background: #f97316;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.admin-btn:hover {
+  background: #ea580c;
+}
+
+/* Responsive */
+
+@media (max-width: 1200px) {
+  .admin-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .admin-content h1 {
+    font-size: 32px;
+  }
+
+  .admin-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

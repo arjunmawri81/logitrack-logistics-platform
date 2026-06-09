@@ -1,0 +1,146 @@
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  margin-left: 260px;
+  padding: 35px;
+  width: 100%;
+}
+
+.main-content h1 {
+  color: white;
+  font-size: 42px;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+/* Cards */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 20px;
+  border-top: 4px solid #f97316;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  color: #111827;
+  font-size: 20px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.card p {
+  font-size: 36px;
+  font-weight: 700;
+  color: #f97316;
+}
+
+/* Recent Shipments */
+
+.recent-shipments {
+  margin-top: 40px;
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.recent-shipments h2 {
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+.recent-shipments table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recent-shipments thead {
+  background: #f97316;
+  color: white;
+}
+
+.recent-shipments th,
+.recent-shipments td {
+  padding: 15px;
+  text-align: left;
+}
+
+.recent-shipments tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.recent-shipments tbody tr:hover {
+  background: #fff7ed;
+}
+
+/* Status */
+
+.delivered {
+  color: green;
+  font-weight: 600;
+}
+
+.transit {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.pending {
+  color: #f97316;
+  font-weight: 600;
+}
+
+/* Analytics Section */
+
+.analytics-section {
+  margin-top: 40px;
+}
+
+/* Tablet */
+
+@media (max-width: 1200px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .main-content h1 {
+    font-size: 32px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .recent-shipments {
+    overflow-x: auto;
+  }
+
+  .recent-shipments table {
+    min-width: 700px;
+  }
+}

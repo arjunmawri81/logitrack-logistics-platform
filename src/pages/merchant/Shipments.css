@@ -1,0 +1,57 @@
+.shipments-page {
+  display: flex;
+  min-height: 100vh;
+}
+
+.shipments-content {
+  margin-left: 260px;
+  padding: 35px;
+  width: 100%;
+}
+
+.shipments-content h1 {
+  color: white;
+  font-size: 42px;
+  margin-bottom: 25px;
+}
+
+.table-container {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container thead {
+  background: #f97316;
+}
+
+.table-container thead th {
+  color: white;
+  padding: 18px;
+  text-align: left;
+}
+
+.table-container tbody td {
+  padding: 18px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table-container tbody tr:hover {
+  background: #f9fafb;
+}
+
+.status-delivered {
+  color: green;
+  font-weight: 600;
+}
+
+.status-transit {
+  color: #f97316;
+  font-weight: 600;
+}

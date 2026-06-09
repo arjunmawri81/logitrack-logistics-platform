@@ -1,0 +1,58 @@
+.tracking-section {
+  margin-top: -80px;
+  position: relative;
+  z-index: 10;
+}
+
+.tracking-card {
+  width: 90%;
+  max-width: 1100px;
+  margin: auto;
+
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+
+  text-align: center;
+}
+
+.tracking-card h2 {
+  font-size: 32px;
+  color: #111827;
+}
+
+.tracking-card p {
+  color: #6b7280;
+  margin: 15px 0 30px;
+}
+
+.tracking-form {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.tracking-form input {
+  width: 60%;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  outline: none;
+  font-size: 16px;
+}
+
+.tracking-form button {
+  background: #f97316;
+  color: white;
+  border: none;
+  padding: 16px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tracking-form button:hover {
+  opacity: 0.9;
+}

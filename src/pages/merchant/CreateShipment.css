@@ -1,0 +1,82 @@
+.shipment-container {
+  margin-left: 260px;
+  padding: 35px;
+  min-height: 100vh;
+}
+
+.shipment-container h1 {
+  color: white;
+  font-size: 42px;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+.shipment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.form-section {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.form-section h2 {
+  color: #111827;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.form-section input,
+.form-section textarea,
+.form-section select {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  outline: none;
+  font-size: 15px;
+}
+
+.form-section input:focus,
+.form-section textarea:focus,
+.form-section select:focus {
+  border-color: #f97316;
+}
+
+.form-section textarea {
+  resize: none;
+  height: 120px;
+}
+
+.submit-btn {
+  background: #f97316;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background: #ea580c;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .shipment-container {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .shipment-container h1 {
+    font-size: 32px;
+  }
+}
