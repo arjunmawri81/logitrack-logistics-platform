@@ -1,66 +1,116 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import {
+  FaHome,
+  FaUsers,
+  FaStore,
+  FaTruck,
+  FaRupeeSign,
+  FaChartBar,
+  FaCog,
+  FaSignOutAlt,
+} from "react-icons/fa";
+
 import "./AdminSidebar.css";
 
 const AdminSidebar = () => {
   return (
     <div className="admin-sidebar">
-      <h2 className="admin-logo">LogiTrack Admin</h2>
 
-      <ul>
+      {/* Logo */}
+
+      <div className="admin-brand">
+        <h2>LogiTrack</h2>
+        <span>Super Admin Panel</span>
+      </div>
+
+      {/* Profile */}
+
+      <div className="admin-profile">
+
+        <div className="profile-avatar">
+          AS
+        </div>
+
+        <div className="profile-info">
+          <h4>Arjun Singh</h4>
+          <span>Administrator</span>
+        </div>
+
+      </div>
+
+      {/* Menu */}
+
+      <ul className="admin-menu">
+
         <li>
-          <Link to="/admin/dashboard">
-            🏠 Dashboard
-          </Link>
+          <NavLink to="/admin/dashboard">
+            <FaHome />
+            <span>Dashboard</span>
+          </NavLink>
         </li>
 
         <li>
-          <Link to="/admin/users">
-            👥 Users
-          </Link>
+          <NavLink to="/admin/users">
+            <FaUsers />
+            <span>Users</span>
+          </NavLink>
         </li>
 
         <li>
-          <Link to="/admin/merchants">
-            🏢 Merchants
-          </Link>
+          <NavLink to="/admin/merchants">
+            <FaStore />
+            <span>Merchants</span>
+          </NavLink>
         </li>
 
         <li>
-          <Link to="/admin/couriers">
-            🚚 Couriers
-          </Link>
+          <NavLink to="/admin/couriers">
+            <FaTruck />
+            <span>Couriers</span>
+          </NavLink>
         </li>
 
         <li>
-          <Link to="/admin/pricing">
-            💲 Pricing
-          </Link>
+          <NavLink to="/admin/pricing">
+            <FaRupeeSign />
+            <span>Pricing</span>
+          </NavLink>
         </li>
 
         <li>
-          <Link to="/admin/revenue">
-            📈 Revenue
-          </Link>
+          <NavLink to="/admin/revenue">
+            <FaChartBar />
+            <span>Revenue</span>
+          </NavLink>
         </li>
 
         <li>
-          <Link to="/admin/reports">
-            📊 Reports
-          </Link>
+          <NavLink to="/admin/reports">
+            <FaChartBar />
+            <span>Reports</span>
+          </NavLink>
         </li>
 
         <li>
-          <Link to="/admin/settings">
-            ⚙️ Settings
-          </Link>
+          <NavLink to="/admin/settings">
+            <FaCog />
+            <span>Settings</span>
+          </NavLink>
         </li>
 
-        <li>
-          <Link to="/login">
-            🚪 Logout
-          </Link>
-        </li>
       </ul>
+
+      {/* Logout */}
+
+      <div className="logout-section">
+
+        <NavLink to="/login">
+          <FaSignOutAlt />
+          <span>Logout</span>
+        </NavLink>
+
+      </div>
+
     </div>
   );
 };

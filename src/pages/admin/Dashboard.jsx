@@ -1,50 +1,95 @@
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import AdminTopbar from "../../components/admin/AdminTopbar";
+
+import {
+  FaUsers,
+  FaTruck,
+  FaRupeeSign,
+  FaBox,
+} from "react-icons/fa";
+
 import "./Dashboard.css";
 
 const Dashboard = () => {
   return (
     <div className="admin-dashboard">
+
       <AdminSidebar />
 
       <div className="admin-content">
+
         <AdminTopbar />
 
-        {/* Stats Cards */}
+        {/* KPI CARDS */}
 
         <div className="admin-cards">
-          <div className="admin-card">
+
+          <div className="admin-card merchants">
+            <FaUsers className="card-icon" />
             <h3>Total Merchants</h3>
             <p>245</p>
           </div>
 
-          <div className="admin-card">
+          <div className="admin-card shipments">
+            <FaTruck className="card-icon" />
             <h3>Total Shipments</h3>
             <p>12,450</p>
           </div>
 
-          <div className="admin-card">
+          <div className="admin-card revenue">
+            <FaRupeeSign className="card-icon" />
             <h3>Total Revenue</h3>
             <p>₹12.5L</p>
           </div>
 
-          <div className="admin-card">
+          <div className="admin-card couriers">
+            <FaBox className="card-icon" />
             <h3>Active Couriers</h3>
             <p>8</p>
           </div>
 
-          <div className="admin-card">
-            <h3>Pending Orders</h3>
-            <p>156</p>
-          </div>
         </div>
 
-        {/* Recent Merchants */}
+        {/* PLATFORM OVERVIEW */}
 
         <div className="admin-table-section">
+
+          <h2>Platform Overview</h2>
+
+          <div className="overview-cards">
+
+            <div className="overview-card">
+              <h3>Today's Shipments</h3>
+              <p>458</p>
+            </div>
+
+            <div className="overview-card">
+              <h3>COD Orders</h3>
+              <p>125</p>
+            </div>
+
+            <div className="overview-card">
+              <h3>Support Tickets</h3>
+              <p>18</p>
+            </div>
+
+            <div className="overview-card">
+              <h3>New Merchants</h3>
+              <p>12</p>
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* RECENT MERCHANTS */}
+
+        <div className="admin-table-section">
+
           <h2>Recent Merchants</h2>
 
           <table className="admin-table">
+
             <thead>
               <tr>
                 <th>Company</th>
@@ -55,6 +100,7 @@ const Dashboard = () => {
             </thead>
 
             <tbody>
+
               <tr>
                 <td>ABC Logistics</td>
                 <td>Arjun Singh</td>
@@ -87,53 +133,15 @@ const Dashboard = () => {
                   </button>
                 </td>
               </tr>
+
             </tbody>
+
           </table>
+
         </div>
 
-        {/* Analytics Section */}
-
-        <div
-          className="admin-cards"
-          style={{ marginTop: "40px" }}
-        >
-          <div className="admin-card">
-            <h3>Courier Status</h3>
-
-            <p style={{ fontSize: "18px", color: "#111827" }}>
-              <span className="active">●</span> DTDC
-            </p>
-
-            <p style={{ fontSize: "18px", color: "#111827" }}>
-              <span className="active">●</span> Delhivery
-            </p>
-
-            <p style={{ fontSize: "18px", color: "#111827" }}>
-              <span className="blocked">●</span> Blue Dart
-            </p>
-          </div>
-
-          <div className="admin-card">
-            <h3>Today's Shipments</h3>
-            <p>458</p>
-          </div>
-
-          <div className="admin-card">
-            <h3>COD Orders</h3>
-            <p>125</p>
-          </div>
-
-          <div className="admin-card">
-            <h3>New Merchants</h3>
-            <p>12</p>
-          </div>
-
-          <div className="admin-card">
-            <h3>Support Tickets</h3>
-            <p>18</p>
-          </div>
-        </div>
       </div>
+
     </div>
   );
 };

@@ -9,13 +9,15 @@ import Register from "./pages/auth/Register";
 
 // Merchant Pages
 import Dashboard from "./pages/merchant/Dashboard";
+import Orders from "./pages/merchant/Orders";
 import CreateShipment from "./pages/merchant/CreateShipment";
 import Shipments from "./pages/merchant/Shipments";
 import Tracking from "./pages/merchant/Tracking";
-import Profile from "./pages/merchant/Profile";
-import Settings from "./pages/merchant/Settings";
 import Wallet from "./pages/merchant/Wallet";
 import Billing from "./pages/merchant/Billing";
+import MerchantReports from "./pages/merchant/Reports";
+import Profile from "./pages/merchant/Profile";
+import Settings from "./pages/merchant/Settings";
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -24,7 +26,7 @@ import Merchants from "./pages/admin/Merchants";
 import Couriers from "./pages/admin/Couriers";
 import Pricing from "./pages/admin/Pricing";
 import Revenue from "./pages/admin/Revenue";
-import Reports from "./pages/admin/Reports";
+import AdminReports from "./pages/admin/Reports";
 import AdminSettings from "./pages/admin/Settings";
 
 // Protected Routes
@@ -36,18 +38,32 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        {/* Public Routes */}
+        {/* ======================
+            PUBLIC ROUTES
+        ====================== */}
+
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Merchant Routes */}
+        {/* ======================
+            MERCHANT ROUTES
+        ====================== */}
 
         <Route
           path="/dashboard"
           element={
             <MerchantRoute>
               <Dashboard />
+            </MerchantRoute>
+          }
+        />
+
+        <Route
+          path="/orders"
+          element={
+            <MerchantRoute>
+              <Orders />
             </MerchantRoute>
           }
         />
@@ -80,24 +96,6 @@ function App() {
         />
 
         <Route
-          path="/profile"
-          element={
-            <MerchantRoute>
-              <Profile />
-            </MerchantRoute>
-          }
-        />
-
-        <Route
-          path="/settings"
-          element={
-            <MerchantRoute>
-              <Settings />
-            </MerchantRoute>
-          }
-        />
-
-        <Route
           path="/wallet"
           element={
             <MerchantRoute>
@@ -115,7 +113,36 @@ function App() {
           }
         />
 
-        {/* Admin Routes */}
+        <Route
+          path="/reports"
+          element={
+            <MerchantRoute>
+              <MerchantReports />
+            </MerchantRoute>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <MerchantRoute>
+              <Profile />
+            </MerchantRoute>
+          }
+        />
+
+        <Route
+          path="/settings"
+          element={
+            <MerchantRoute>
+              <Settings />
+            </MerchantRoute>
+          }
+        />
+
+        {/* ======================
+            ADMIN ROUTES
+        ====================== */}
 
         <Route
           path="/admin/dashboard"
@@ -175,7 +202,7 @@ function App() {
           path="/admin/reports"
           element={
             <AdminRoute>
-              <Reports />
+              <AdminReports />
             </AdminRoute>
           }
         />

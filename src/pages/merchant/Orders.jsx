@@ -1,36 +1,34 @@
 import Sidebar from "../../components/Sidebar";
 import {
-  FaTruck,
+  FaBox,
   FaCheckCircle,
+  FaTruck,
   FaClock,
-  FaTimesCircle,
   FaSearch,
   FaEye,
   FaPlus,
 } from "react-icons/fa";
 
-import "./Shipments.css";
+import "./Orders.css";
 
-const Shipments = () => {
+const Orders = () => {
   return (
     <div className="dashboard">
 
       <Sidebar />
 
-      <div className="shipments-content">
-
-        {/* Header */}
+      <div className="main-content">
 
         <div className="page-header">
 
           <div>
-            <h1>Shipments Management</h1>
-            <p>Track and manage all shipments</p>
+            <h1>Orders Management</h1>
+            <p>Manage and track all customer orders</p>
           </div>
 
           <button className="create-btn">
             <FaPlus />
-            Create Shipment
+            Create Order
           </button>
 
         </div>
@@ -40,8 +38,8 @@ const Shipments = () => {
         <div className="stats-grid">
 
           <div className="stats-card">
-            <FaTruck className="stats-icon blue" />
-            <h4>Total Shipments</h4>
+            <FaBox className="stats-icon blue" />
+            <h4>Total Orders</h4>
             <h2>1250</h2>
           </div>
 
@@ -52,20 +50,20 @@ const Shipments = () => {
           </div>
 
           <div className="stats-card">
-            <FaClock className="stats-icon orange" />
+            <FaTruck className="stats-icon orange" />
             <h4>In Transit</h4>
             <h2>180</h2>
           </div>
 
           <div className="stats-card">
-            <FaTimesCircle className="stats-icon red" />
-            <h4>Cancelled</h4>
-            <h2>25</h2>
+            <FaClock className="stats-icon red" />
+            <h4>Pending</h4>
+            <h2>65</h2>
           </div>
 
         </div>
 
-        {/* Filters */}
+        {/* Search */}
 
         <div className="filter-bar">
 
@@ -75,7 +73,7 @@ const Shipments = () => {
 
             <input
               type="text"
-              placeholder="Search AWB Number..."
+              placeholder="Search Order ID..."
             />
 
           </div>
@@ -87,26 +85,20 @@ const Shipments = () => {
             <option>Pending</option>
           </select>
 
-          <select>
-            <option>Courier</option>
-            <option>DTDC</option>
-            <option>Delhivery</option>
-            <option>XpressBees</option>
-          </select>
-
         </div>
 
         {/* Table */}
 
-        <div className="table-container">
+        <div className="table-section">
 
-          <table>
+          <table className="orders-table">
 
             <thead>
               <tr>
-                <th>AWB</th>
+                <th>Order ID</th>
+                <th>Customer</th>
                 <th>Courier</th>
-                <th>Date</th>
+                <th>Amount</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -115,9 +107,10 @@ const Shipments = () => {
             <tbody>
 
               <tr>
-                <td>AWB12345</td>
+                <td>#ORD1001</td>
+                <td>Rahul Sharma</td>
                 <td>DTDC</td>
-                <td>08-06-2026</td>
+                <td>₹450</td>
 
                 <td>
                   <span className="badge delivered">
@@ -133,13 +126,33 @@ const Shipments = () => {
               </tr>
 
               <tr>
-                <td>AWB67890</td>
+                <td>#ORD1002</td>
+                <td>Amit Kumar</td>
                 <td>Delhivery</td>
-                <td>08-06-2026</td>
+                <td>₹620</td>
 
                 <td>
                   <span className="badge transit">
                     In Transit
+                  </span>
+                </td>
+
+                <td>
+                  <button className="view-btn">
+                    <FaEye />
+                  </button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>#ORD1003</td>
+                <td>Vikas Singh</td>
+                <td>XpressBees</td>
+                <td>₹299</td>
+
+                <td>
+                  <span className="badge pending">
+                    Pending
                   </span>
                 </td>
 
@@ -162,4 +175,4 @@ const Shipments = () => {
   );
 };
 
-export default Shipments;
+export default Orders;
