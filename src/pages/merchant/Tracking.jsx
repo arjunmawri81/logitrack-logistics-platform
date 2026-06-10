@@ -1,7 +1,32 @@
+import { useState } from "react";
 import Sidebar from "../../components/Sidebar";
+import api from "../../services/api";
 import "./Tracking.css";
 
 const Tracking = () => {
+  const [shipmentId, setShipmentId] =
+    useState("");
+
+  const [shipment, setShipment] =
+    useState(null);
+
+  const handleTrack = async () => {
+    try {
+      const response = await api.get(
+        `/tracking/${shipmentId}`
+      );
+
+      setShipment(
+        response.data.shipment
+      );
+    } catch (error) {
+      alert(
+        error?.response?.data?.message ||
+          "Shipment Not Found"
+      );
+    }
+  };
+
   return (
     <div className="dashboard">
       <Sidebar />
@@ -9,72 +34,68 @@ const Tracking = () => {
       <div className="tracking-container">
         <h1>Track Shipment</h1>
 
-        {/* Search Section */}
         <div className="tracking-card">
+
           <input
             type="text"
-            placeholder="Enter AWB Number"
+            placeholder="Enter Shipment ID"
+            value={shipmentId}
+            onChange={(e) =>
+              setShipmentId(
+                e.target.value
+              )
+            }
           />
 
-          <button>
+          <button
+            onClick={handleTrack}
+          >
             Track Shipment
           </button>
+
         </div>
 
-        {/* Shipment Details */}
-        <div className="tracking-result">
-          <h2>Shipment Details</h2>
+        {shipment && (
+          <div className="tracking-result">
 
-          <div className="status-box">
-            <p>
-              <strong>AWB:</strong> AWB12345
-            </p>
+            <h2>
+              Shipment Details
+            </h2>
 
-            <p>
-              <strong>Courier:</strong> DTDC
-            </p>
+            <div className="status-box">
 
-            <p>
-              <strong>Status:</strong>
-              <span className="status-badge">
-                In Transit
-              </span>
-            </p>
+              <p>
+                <strong>AWB:</strong>{" "}
+                {shipment.awb}
+              </p>
 
-            <p>
-              <strong>Expected Delivery:</strong>
-              {" "}10 June 2026
-            </p>
+              <p>
+                <strong>
+                  Courier:
+                </strong>{" "}
+                {shipment.courier}
+              </p>
 
-            {/* Timeline */}
-            <div className="timeline">
-              <div className="timeline-item">
-                <h4>Order Created</h4>
-                <p>08 June 2026 - 10:00 AM</p>
-              </div>
+              <p>
+                <strong>
+                  Status:
+                </strong>{" "}
+                {shipment.status}
+              </p>
 
-              <div className="timeline-item">
-                <h4>Picked Up</h4>
-                <p>08 June 2026 - 03:00 PM</p>
-              </div>
+              <p>
+                <strong>
+                  Created:
+                </strong>{" "}
+                {new Date(
+                  shipment.createdAt
+                ).toLocaleDateString()}
+              </p>
 
-              <div className="timeline-item">
-                <h4>In Transit</h4>
-                <p>09 June 2026 - 09:00 AM</p>
-              </div>
-
-              <div className="timeline-item">
-                <h4>Out For Delivery</h4>
-                <p>Expected Soon</p>
-              </div>
-
-              <div className="timeline-item">
-                <h4>Delivered</h4>
-                <p>Pending</p>
-              </div>
             </div>
+
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

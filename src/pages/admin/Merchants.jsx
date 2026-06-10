@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 import AdminSidebar from "../../components/admin/AdminSidebar";
+import api from "../../services/api";
+
 import {
   FaStore,
   FaUserCheck,
@@ -11,6 +14,30 @@ import {
 import "./Admin.css";
 
 const Merchants = () => {
+  const [merchants, setMerchants] = useState([]);
+
+  useEffect(() => {
+    fetchMerchants();
+  }, []);
+
+  const fetchMerchants = async () => {
+    try {
+      const response = await api.get(
+        "/admin/users"
+      );
+
+      const merchantUsers =
+        response.data.users.filter(
+          (user) =>
+            user.role === "MERCHANT"
+        );
+
+      setMerchants(merchantUsers);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="admin-dashboard">
       <AdminSidebar />
@@ -38,25 +65,25 @@ const Merchants = () => {
           <div className="courier-stat-card">
             <FaStore className="stat-icon blue" />
             <h4>Total Merchants</h4>
-            <h2>245</h2>
+            <h2>{merchants.length}</h2>
           </div>
 
           <div className="courier-stat-card">
             <FaUserCheck className="stat-icon green" />
             <h4>Active Merchants</h4>
-            <h2>210</h2>
+            <h2>{merchants.length}</h2>
           </div>
 
           <div className="courier-stat-card">
             <FaBan className="stat-icon red" />
             <h4>Blocked Accounts</h4>
-            <h2>12</h2>
+            <h2>0</h2>
           </div>
 
           <div className="courier-stat-card">
             <FaWallet className="stat-icon orange" />
             <h4>Total Wallet Balance</h4>
-            <h2>₹8L</h2>
+            <h2>₹0</h2>
           </div>
 
         </div>
@@ -95,86 +122,56 @@ const Merchants = () => {
 
             <tbody>
 
-              <tr>
-                <td>
-                  <div className="courier-info">
-                    <div className="courier-avatar">
-                      AB
-                    </div>
-                    ABC Logistics
-                  </div>
-                </td>
+              {merchants.length > 0 ? (
+                merchants.map((merchant) => (
+                  <tr key={merchant._id}>
 
-                <td>Arjun Singh</td>
-                <td>abc@test.com</td>
-                <td>₹15,000</td>
+                    <td>
+                      <div className="courier-info">
 
-                <td>
-                  <span className="active">
-                    Active
-                  </span>
-                </td>
+                        <div className="courier-avatar">
+                          {merchant.name
+                            ?.substring(0, 2)
+                            .toUpperCase()}
+                        </div>
 
-                <td>
-                  <button className="admin-btn">
-                    <FaEye />
-                  </button>
-                </td>
-              </tr>
+                        {merchant.name}
 
-              <tr>
-                <td>
-                  <div className="courier-info">
-                    <div className="courier-avatar">
-                      FS
-                    </div>
-                    FastShip Pvt Ltd
-                  </div>
-                </td>
+                      </div>
+                    </td>
 
-                <td>Rahul Sharma</td>
-                <td>fastship@test.com</td>
-                <td>₹8,500</td>
+                    <td>{merchant.name}</td>
 
-                <td>
-                  <span className="pending">
-                    Pending
-                  </span>
-                </td>
+                    <td>{merchant.email}</td>
 
-                <td>
-                  <button className="admin-btn">
-                    <FaEye />
-                  </button>
-                </td>
-              </tr>
+                    <td>₹0</td>
 
-              <tr>
-                <td>
-                  <div className="courier-info">
-                    <div className="courier-avatar">
-                      EC
-                    </div>
-                    Express Cargo
-                  </div>
-                </td>
+                    <td>
+                      <span className="active">
+                        Active
+                      </span>
+                    </td>
 
-                <td>Amit Kumar</td>
-                <td>express@test.com</td>
-                <td>₹22,000</td>
+                    <td>
+                      <button className="admin-btn">
+                        <FaEye />
+                      </button>
+                    </td>
 
-                <td>
-                  <span className="blocked">
-                    Blocked
-                  </span>
-                </td>
-
-                <td>
-                  <button className="admin-btn">
-                    <FaEye />
-                  </button>
-                </td>
-              </tr>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="6"
+                    style={{
+                      textAlign: "center",
+                    }}
+                  >
+                    No Merchants Found
+                  </td>
+                </tr>
+              )}
 
             </tbody>
 

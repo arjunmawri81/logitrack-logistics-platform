@@ -1,176 +1,128 @@
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
+import api from "../../services/api";
+
 import {
   FaBox,
-  FaCheckCircle,
-  FaTruck,
-  FaClock,
   FaSearch,
-  FaEye,
-  FaPlus,
 } from "react-icons/fa";
 
 import "./Orders.css";
 
 const Orders = () => {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  const fetchOrders = async () => {
+    try {
+      const response = await api.get("/orders");
+
+      setOrders(response.data.orders || []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="dashboard">
-
       <Sidebar />
 
       <div className="main-content">
 
         <div className="page-header">
-
           <div>
             <h1>Orders Management</h1>
-            <p>Manage and track all customer orders</p>
+            <p>
+              Manage and track all customer orders
+            </p>
           </div>
 
           <button className="create-btn">
-            <FaPlus />
             Create Order
           </button>
-
         </div>
 
         {/* Stats */}
 
         <div className="stats-grid">
-
           <div className="stats-card">
-            <FaBox className="stats-icon blue" />
+            <FaBox className="stats-icon" />
             <h4>Total Orders</h4>
-            <h2>1250</h2>
+            <h2>{orders.length}</h2>
           </div>
-
-          <div className="stats-card">
-            <FaCheckCircle className="stats-icon green" />
-            <h4>Delivered</h4>
-            <h2>980</h2>
-          </div>
-
-          <div className="stats-card">
-            <FaTruck className="stats-icon orange" />
-            <h4>In Transit</h4>
-            <h2>180</h2>
-          </div>
-
-          <div className="stats-card">
-            <FaClock className="stats-icon red" />
-            <h4>Pending</h4>
-            <h2>65</h2>
-          </div>
-
         </div>
 
         {/* Search */}
 
         <div className="filter-bar">
-
           <div className="search-box">
-
             <FaSearch className="search-icon" />
 
             <input
               type="text"
-              placeholder="Search Order ID..."
+              placeholder="Search Orders..."
             />
-
           </div>
-
-          <select>
-            <option>Status</option>
-            <option>Delivered</option>
-            <option>Transit</option>
-            <option>Pending</option>
-          </select>
-
         </div>
 
         {/* Table */}
 
         <div className="table-section">
-
           <table className="orders-table">
 
             <thead>
               <tr>
                 <th>Order ID</th>
                 <th>Customer</th>
-                <th>Courier</th>
                 <th>Amount</th>
                 <th>Status</th>
-                <th>Action</th>
               </tr>
             </thead>
 
             <tbody>
 
-              <tr>
-                <td>#ORD1001</td>
-                <td>Rahul Sharma</td>
-                <td>DTDC</td>
-                <td>₹450</td>
+              {orders.length > 0 ? (
+                orders.map((order) => (
+                  <tr key={order._id}>
+                    <td>
+                      {order._id}
+                    </td>
 
-                <td>
-                  <span className="badge delivered">
-                    Delivered
-                  </span>
-                </td>
+                    <td>
+                      {order.customerName}
+                    </td>
 
-                <td>
-                  <button className="view-btn">
-                    <FaEye />
-                  </button>
-                </td>
-              </tr>
+                    <td>
+                      ₹{order.amount}
+                    </td>
 
-              <tr>
-                <td>#ORD1002</td>
-                <td>Amit Kumar</td>
-                <td>Delhivery</td>
-                <td>₹620</td>
-
-                <td>
-                  <span className="badge transit">
-                    In Transit
-                  </span>
-                </td>
-
-                <td>
-                  <button className="view-btn">
-                    <FaEye />
-                  </button>
-                </td>
-              </tr>
-
-              <tr>
-                <td>#ORD1003</td>
-                <td>Vikas Singh</td>
-                <td>XpressBees</td>
-                <td>₹299</td>
-
-                <td>
-                  <span className="badge pending">
-                    Pending
-                  </span>
-                </td>
-
-                <td>
-                  <button className="view-btn">
-                    <FaEye />
-                  </button>
-                </td>
-              </tr>
+                    <td>
+                      {order.status}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="4"
+                    style={{
+                      textAlign: "center",
+                    }}
+                  >
+                    No Orders Found
+                  </td>
+                </tr>
+              )}
 
             </tbody>
 
           </table>
-
         </div>
 
       </div>
-
     </div>
   );
 };

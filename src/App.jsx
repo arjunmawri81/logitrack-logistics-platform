@@ -28,6 +28,8 @@ import Pricing from "./pages/admin/Pricing";
 import Revenue from "./pages/admin/Revenue";
 import AdminReports from "./pages/admin/Reports";
 import AdminSettings from "./pages/admin/Settings";
+import AdminOrders from "./pages/admin/Orders";
+import AdminShipments from "./pages/admin/Shipments";
 
 // Protected Routes
 import AdminRoute from "./routes/AdminRoute";
@@ -170,6 +172,24 @@ function App() {
             </AdminRoute>
           }
         />
+
+        <Route
+  path="/admin/orders"
+  element={
+    <AdminRoute>
+      <AdminOrders />
+    </AdminRoute>
+  }
+/>
+
+<Route
+  path="/admin/shipments"
+  element={
+    <AdminRoute>
+      <AdminShipments />
+    </AdminRoute>
+  }
+/>
 
         <Route
           path="/admin/couriers"

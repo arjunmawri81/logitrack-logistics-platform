@@ -1,38 +1,51 @@
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
+import api from "../../services/api";
+
 import {
   FaTruck,
-  FaCheckCircle,
-  FaClock,
-  FaTimesCircle,
   FaSearch,
-  FaEye,
-  FaPlus,
 } from "react-icons/fa";
 
 import "./Shipments.css";
 
 const Shipments = () => {
+  const [shipments, setShipments] = useState([]);
+
+  useEffect(() => {
+    fetchShipments();
+  }, []);
+
+  const fetchShipments = async () => {
+    try {
+      const response = await api.get(
+        "/shipments"
+      );
+
+      setShipments(
+        response.data.shipments || []
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="dashboard">
-
       <Sidebar />
 
       <div className="shipments-content">
 
-        {/* Header */}
-
         <div className="page-header">
-
           <div>
-            <h1>Shipments Management</h1>
-            <p>Track and manage all shipments</p>
+            <h1>
+              Shipments Management
+            </h1>
+
+            <p>
+              Track and manage all shipments
+            </p>
           </div>
-
-          <button className="create-btn">
-            <FaPlus />
-            Create Shipment
-          </button>
-
         </div>
 
         {/* Stats */}
@@ -41,31 +54,17 @@ const Shipments = () => {
 
           <div className="stats-card">
             <FaTruck className="stats-icon blue" />
+
             <h4>Total Shipments</h4>
-            <h2>1250</h2>
-          </div>
 
-          <div className="stats-card">
-            <FaCheckCircle className="stats-icon green" />
-            <h4>Delivered</h4>
-            <h2>980</h2>
-          </div>
-
-          <div className="stats-card">
-            <FaClock className="stats-icon orange" />
-            <h4>In Transit</h4>
-            <h2>180</h2>
-          </div>
-
-          <div className="stats-card">
-            <FaTimesCircle className="stats-icon red" />
-            <h4>Cancelled</h4>
-            <h2>25</h2>
+            <h2>
+              {shipments.length}
+            </h2>
           </div>
 
         </div>
 
-        {/* Filters */}
+        {/* Search */}
 
         <div className="filter-bar">
 
@@ -75,24 +74,10 @@ const Shipments = () => {
 
             <input
               type="text"
-              placeholder="Search AWB Number..."
+              placeholder="Search AWB..."
             />
 
           </div>
-
-          <select>
-            <option>Status</option>
-            <option>Delivered</option>
-            <option>Transit</option>
-            <option>Pending</option>
-          </select>
-
-          <select>
-            <option>Courier</option>
-            <option>DTDC</option>
-            <option>Delhivery</option>
-            <option>XpressBees</option>
-          </select>
 
         </div>
 
@@ -105,50 +90,66 @@ const Shipments = () => {
             <thead>
               <tr>
                 <th>AWB</th>
+                <th>Customer</th>
                 <th>Courier</th>
-                <th>Date</th>
                 <th>Status</th>
-                <th>Action</th>
+                <th>Date</th>
               </tr>
             </thead>
 
             <tbody>
 
-              <tr>
-                <td>AWB12345</td>
-                <td>DTDC</td>
-                <td>08-06-2026</td>
+              {shipments.length > 0 ? (
+                shipments.map(
+                  (shipment) => (
+                    <tr
+                      key={shipment._id}
+                    >
+                      <td>
+                        {shipment.awb}
+                      </td>
 
-                <td>
-                  <span className="badge delivered">
-                    Delivered
-                  </span>
-                </td>
+                      <td>
+                        {
+                          shipment
+                            .orderId
+                            ?.customerName
+                        }
+                      </td>
 
-                <td>
-                  <button className="view-btn">
-                    <FaEye />
-                  </button>
-                </td>
-              </tr>
+                      <td>
+                        {
+                          shipment.courier
+                        }
+                      </td>
 
-              <tr>
-                <td>AWB67890</td>
-                <td>Delhivery</td>
-                <td>08-06-2026</td>
+                      <td>
+                        {
+                          shipment.status
+                        }
+                      </td>
 
-                <td>
-                  <span className="badge transit">
-                    In Transit
-                  </span>
-                </td>
-
-                <td>
-                  <button className="view-btn">
-                    <FaEye />
-                  </button>
-                </td>
-              </tr>
+                      <td>
+                        {new Date(
+                          shipment.createdAt
+                        ).toLocaleDateString()}
+                      </td>
+                    </tr>
+                  )
+                )
+              ) : (
+                <tr>
+                  <td
+                    colSpan="5"
+                    style={{
+                      textAlign:
+                        "center",
+                    }}
+                  >
+                    No Shipments Found
+                  </td>
+                </tr>
+              )}
 
             </tbody>
 
@@ -157,7 +158,6 @@ const Shipments = () => {
         </div>
 
       </div>
-
     </div>
   );
 };

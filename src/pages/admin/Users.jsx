@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 import AdminSidebar from "../../components/admin/AdminSidebar";
+import api from "../../services/api";
+
 import {
   FaUsers,
   FaUserShield,
@@ -11,13 +14,40 @@ import {
 import "./Admin.css";
 
 const Users = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await api.get(
+        "/admin/users"
+      );
+
+      setUsers(response.data.users || []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const totalAdmins = users.filter(
+    (user) =>
+      user.role === "ADMIN" ||
+      user.role === "SUPER_ADMIN"
+  ).length;
+
+  const totalMerchants = users.filter(
+    (user) =>
+      user.role === "MERCHANT"
+  ).length;
+
   return (
     <div className="admin-dashboard">
       <AdminSidebar />
 
       <div className="admin-content">
-
-        {/* Header */}
 
         <div className="page-header">
           <div>
@@ -26,7 +56,7 @@ const Users = () => {
             </h1>
 
             <p className="page-subtitle">
-              Manage platform users, admins and support staff
+              Manage platform users, admins and merchants
             </p>
           </div>
         </div>
@@ -38,25 +68,25 @@ const Users = () => {
           <div className="courier-stat-card">
             <FaUsers className="stat-icon blue" />
             <h4>Total Users</h4>
-            <h2>1,254</h2>
+            <h2>{users.length}</h2>
           </div>
 
           <div className="courier-stat-card">
             <FaUserShield className="stat-icon green" />
             <h4>Admins</h4>
-            <h2>12</h2>
+            <h2>{totalAdmins}</h2>
           </div>
 
           <div className="courier-stat-card">
             <FaUserTie className="stat-icon orange" />
             <h4>Merchants</h4>
-            <h2>245</h2>
+            <h2>{totalMerchants}</h2>
           </div>
 
           <div className="courier-stat-card">
             <FaUserClock className="stat-icon red" />
             <h4>Pending Users</h4>
-            <h2>8</h2>
+            <h2>0</h2>
           </div>
 
         </div>
@@ -94,86 +124,54 @@ const Users = () => {
 
             <tbody>
 
-              <tr>
-                <td>
-                  <div className="courier-info">
-                    <div className="courier-avatar">
-                      AS
-                    </div>
-                    Arjun Singh
-                  </div>
-                </td>
+              {users.length > 0 ? (
+                users.map((user) => (
+                  <tr key={user._id}>
 
-                <td>arjun@test.com</td>
+                    <td>
+                      <div className="courier-info">
 
-                <td>Super Admin</td>
+                        <div className="courier-avatar">
+                          {user.name
+                            ?.substring(0, 2)
+                            .toUpperCase()}
+                        </div>
 
-                <td>
-                  <span className="active">
-                    Active
-                  </span>
-                </td>
+                        {user.name}
 
-                <td>
-                  <button className="admin-btn">
-                    <FaEye />
-                  </button>
-                </td>
-              </tr>
+                      </div>
+                    </td>
 
-              <tr>
-                <td>
-                  <div className="courier-info">
-                    <div className="courier-avatar">
-                      RS
-                    </div>
-                    Rahul Sharma
-                  </div>
-                </td>
+                    <td>{user.email}</td>
 
-                <td>rahul@test.com</td>
+                    <td>{user.role}</td>
 
-                <td>Admin</td>
+                    <td>
+                      <span className="active">
+                        Active
+                      </span>
+                    </td>
 
-                <td>
-                  <span className="active">
-                    Active
-                  </span>
-                </td>
+                    <td>
+                      <button className="admin-btn">
+                        <FaEye />
+                      </button>
+                    </td>
 
-                <td>
-                  <button className="admin-btn">
-                    <FaEye />
-                  </button>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <div className="courier-info">
-                    <div className="courier-avatar">
-                      AK
-                    </div>
-                    Amit Kumar
-                  </div>
-                </td>
-
-                <td>amit@test.com</td>
-
-                <td>Support</td>
-
-                <td>
-                  <span className="pending">
-                    Pending
-                  </span>
-                </td>
-
-                <td>
-                  <button className="admin-btn">
-                    <FaEye />
-                  </button>
-                </td>
-              </tr>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="5"
+                    style={{
+                      textAlign: "center",
+                    }}
+                  >
+                    No Users Found
+                  </td>
+                </tr>
+              )}
 
             </tbody>
 

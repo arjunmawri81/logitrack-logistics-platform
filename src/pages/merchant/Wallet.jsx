@@ -1,7 +1,28 @@
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
+import api from "../../services/api";
 import "./Wallet.css";
 
 const Wallet = () => {
+  const [wallet, setWallet] = useState({
+    balance: 0,
+    transactions: [],
+  });
+
+  useEffect(() => {
+    fetchWallet();
+  }, []);
+
+  const fetchWallet = async () => {
+    try {
+      const response = await api.get("/wallet");
+
+      setWallet(response.data.wallet);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="dashboard">
       <Sidebar />
@@ -11,7 +32,10 @@ const Wallet = () => {
 
         <div className="balance-card">
           <h2>Available Balance</h2>
-          <p>₹25,000</p>
+
+          <p>
+            ₹{wallet.balance}
+          </p>
 
           <button className="recharge-btn">
             Recharge Wallet
@@ -27,31 +51,60 @@ const Wallet = () => {
                 <th>Date</th>
                 <th>Type</th>
                 <th>Amount</th>
-                <th>Status</th>
+                <th>Description</th>
               </tr>
             </thead>
 
             <tbody>
-              <tr>
-                <td>08 Jun 2026</td>
-                <td>Recharge</td>
-                <td>₹5,000</td>
-                <td>Success</td>
-              </tr>
+              {wallet.transactions?.length >
+              0 ? (
+                wallet.transactions.map(
+                  (transaction) => (
+                    <tr
+                      key={
+                        transaction._id
+                      }
+                    >
+                      <td>
+                        {new Date(
+                          transaction.createdAt
+                        ).toLocaleDateString()}
+                      </td>
 
-              <tr>
-                <td>07 Jun 2026</td>
-                <td>Shipment Charge</td>
-                <td>₹350</td>
-                <td>Debited</td>
-              </tr>
+                      <td>
+                        {
+                          transaction.type
+                        }
+                      </td>
 
-              <tr>
-                <td>06 Jun 2026</td>
-                <td>Recharge</td>
-                <td>₹10,000</td>
-                <td>Success</td>
-              </tr>
+                      <td>
+                        ₹
+                        {
+                          transaction.amount
+                        }
+                      </td>
+
+                      <td>
+                        {
+                          transaction.description
+                        }
+                      </td>
+                    </tr>
+                  )
+                )
+              ) : (
+                <tr>
+                  <td
+                    colSpan="4"
+                    style={{
+                      textAlign:
+                        "center",
+                    }}
+                  >
+                    No Transactions
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

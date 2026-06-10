@@ -1,7 +1,31 @@
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
+import api from "../../services/api";
 import "./Profile.css";
 
 const Profile = () => {
+  const [profile, setProfile] = useState({
+    companyName: "",
+    gstNumber: "",
+    panNumber: "",
+    bankAccount: "",
+    address: "",
+  });
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  const fetchProfile = async () => {
+    try {
+      const res = await api.get("/merchant/profile");
+
+      setProfile(res.data.merchant);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="dashboard">
       <Sidebar />
@@ -24,37 +48,32 @@ const Profile = () => {
           <div className="profile-form">
             <input
               type="text"
-              placeholder="Company Name"
-              value="LogiTrack Pvt Ltd"
+              value={profile.companyName}
               readOnly
             />
 
             <input
               type="text"
-              placeholder="Owner Name"
-              value="Arjun Singh Mawri"
+              value={profile.gstNumber}
               readOnly
             />
 
             <input
-              type="email"
-              placeholder="Email"
-              value="arjunmawri@gmail.com"
+              type="text"
+              value={profile.panNumber}
               readOnly
             />
 
             <input
-              type="tel"
-              placeholder="Mobile Number"
-              value="+91 9368572285"
+              type="text"
+              value={profile.bankAccount}
               readOnly
             />
 
             <textarea
-              placeholder="Company Address"
-              value="Noida, Uttar Pradesh"
+              value={profile.address}
               readOnly
-            ></textarea>
+            />
 
             <button>
               Edit Profile

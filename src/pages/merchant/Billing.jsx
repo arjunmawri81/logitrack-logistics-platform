@@ -1,7 +1,54 @@
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
+import api from "../../services/api";
 import "./Billing.css";
 
 const Billing = () => {
+  const [invoices, setInvoices] = useState([]);
+
+  useEffect(() => {
+    fetchInvoices();
+  }, []);
+
+  const fetchInvoices = async () => {
+    try {
+      const response = await api.get("/billing");
+
+      setInvoices(
+        response.data.invoices || []
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const totalBilling = invoices.reduce(
+    (sum, invoice) => sum + invoice.amount,
+    0
+  );
+
+  const paidBilling = invoices
+    .filter(
+      (invoice) =>
+        invoice.status === "PAID"
+    )
+    .reduce(
+      (sum, invoice) =>
+        sum + invoice.amount,
+      0
+    );
+
+  const pendingBilling = invoices
+    .filter(
+      (invoice) =>
+        invoice.status === "PENDING"
+    )
+    .reduce(
+      (sum, invoice) =>
+        sum + invoice.amount,
+      0
+    );
+
   return (
     <div className="dashboard">
       <Sidebar />
@@ -10,58 +57,87 @@ const Billing = () => {
         <h1>Billing & Invoices</h1>
 
         <div className="billing-summary">
+
           <div className="bill-card">
             <h3>Total Billing</h3>
-            <p>₹1,25,000</p>
+            <p>₹{totalBilling}</p>
           </div>
 
           <div className="bill-card">
             <h3>Paid</h3>
-            <p>₹1,00,000</p>
+            <p>₹{paidBilling}</p>
           </div>
 
           <div className="bill-card">
             <h3>Pending</h3>
-            <p>₹25,000</p>
+            <p>₹{pendingBilling}</p>
           </div>
+
         </div>
 
         <div className="invoice-table">
+
           <h2>Invoices</h2>
 
           <table>
+
             <thead>
               <tr>
                 <th>Invoice ID</th>
                 <th>Date</th>
                 <th>Amount</th>
                 <th>Status</th>
-                <th>Download</th>
               </tr>
             </thead>
 
             <tbody>
-              <tr>
-                <td>INV001</td>
-                <td>08 Jun 2026</td>
-                <td>₹5,000</td>
-                <td>Paid</td>
-                <td>
-                  <button>Download</button>
-                </td>
-              </tr>
 
-              <tr>
-                <td>INV002</td>
-                <td>07 Jun 2026</td>
-                <td>₹3,500</td>
-                <td>Pending</td>
-                <td>
-                  <button>Download</button>
-                </td>
-              </tr>
+              {invoices.length > 0 ? (
+                invoices.map(
+                  (invoice) => (
+                    <tr
+                      key={invoice._id}
+                    >
+                      <td>
+                        {
+                          invoice.invoiceNumber
+                        }
+                      </td>
+
+                      <td>
+                        {new Date(
+                          invoice.createdAt
+                        ).toLocaleDateString()}
+                      </td>
+
+                      <td>
+                        ₹{invoice.amount}
+                      </td>
+
+                      <td>
+                        {invoice.status}
+                      </td>
+                    </tr>
+                  )
+                )
+              ) : (
+                <tr>
+                  <td
+                    colSpan="4"
+                    style={{
+                      textAlign:
+                        "center",
+                    }}
+                  >
+                    No Invoices Found
+                  </td>
+                </tr>
+              )}
+
             </tbody>
+
           </table>
+
         </div>
       </div>
     </div>

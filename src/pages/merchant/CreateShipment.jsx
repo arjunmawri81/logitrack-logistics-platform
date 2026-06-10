@@ -1,203 +1,135 @@
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
-import { FaTruck, FaSave } from "react-icons/fa";
+import api from "../../services/api";
 import "./CreateShipment.css";
 
 const CreateShipment = () => {
+  const [orders, setOrders] = useState([]);
+  const [formData, setFormData] = useState({
+    orderId: "",
+    courier: "",
+  });
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  const fetchOrders = async () => {
+    try {
+      const res = await api.get("/orders");
+      setOrders(res.data.orders || []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await api.post(
+        "/shipments",
+        formData
+      );
+
+      alert(
+        res.data.message ||
+          "Shipment Created Successfully"
+      );
+
+      setFormData({
+        orderId: "",
+        courier: "",
+      });
+    } catch (error) {
+      console.log(error);
+
+      alert(
+        error?.response?.data?.message ||
+          "Shipment Creation Failed"
+      );
+    }
+  };
+
   return (
     <div className="dashboard">
-
       <Sidebar />
 
       <div className="shipment-content">
-
         <div className="page-header">
-
-          <div>
-            <h1>Create Shipment</h1>
-            <p>Create and book a new shipment</p>
-          </div>
-
+          <h1>Create Shipment</h1>
         </div>
 
-        <form className="shipment-form">
-
-          {/* Sender */}
-
+        <form
+          className="shipment-form"
+          onSubmit={handleSubmit}
+        >
           <div className="form-card">
+            <h2>Select Order</h2>
 
-            <h2>Sender Details</h2>
+            <select
+              name="orderId"
+              value={formData.orderId}
+              onChange={handleChange}
+              required
+            >
+              <option value="">
+                Select Order
+              </option>
 
-            <div className="grid-2">
-
-              <input type="text" placeholder="Sender Name" />
-
-              <input
-                type="text"
-                placeholder="Sender Mobile"
-              />
-
-            </div>
-
-            <textarea
-              placeholder="Sender Address"
-            ></textarea>
-
-            <input
-              type="text"
-              placeholder="Pickup Pincode"
-            />
-
+              {orders.map((order) => (
+                <option
+                  key={order._id}
+                  value={order._id}
+                >
+                  {order.customerName}
+                </option>
+              ))}
+            </select>
           </div>
 
-          {/* Receiver */}
-
           <div className="form-card">
-
-            <h2>Receiver Details</h2>
-
-            <div className="grid-2">
-
-              <input type="text" placeholder="Receiver Name" />
-
-              <input
-                type="text"
-                placeholder="Receiver Mobile"
-              />
-
-            </div>
-
-            <textarea
-              placeholder="Receiver Address"
-            ></textarea>
-
-            <input
-              type="text"
-              placeholder="Delivery Pincode"
-            />
-
-          </div>
-
-          {/* Order */}
-
-          <div className="form-card">
-
-            <h2>Order Details</h2>
-
-            <div className="grid-2">
-
-              <input
-                type="text"
-                placeholder="Order ID"
-              />
-
-              <input
-                type="text"
-                placeholder="Product Name"
-              />
-
-            </div>
-
-            <div className="grid-2">
-
-              <input
-                type="number"
-                placeholder="Product Value"
-              />
-
-              <input
-                type="number"
-                placeholder="COD Amount"
-              />
-
-            </div>
-
-          </div>
-
-          {/* Package */}
-
-          <div className="form-card">
-
-            <h2>Package Details</h2>
-
-            <div className="grid-4">
-
-              <input
-                type="number"
-                placeholder="Weight"
-              />
-
-              <input
-                type="number"
-                placeholder="Length"
-              />
-
-              <input
-                type="number"
-                placeholder="Width"
-              />
-
-              <input
-                type="number"
-                placeholder="Height"
-              />
-
-            </div>
-
-          </div>
-
-          {/* Courier */}
-
-          <div className="form-card">
-
             <h2>Select Courier</h2>
 
-            <div className="courier-grid">
+            <select
+              name="courier"
+              value={formData.courier}
+              onChange={handleChange}
+              required
+            >
+              <option value="">
+                Select Courier
+              </option>
 
-              <div className="courier-card">
+              <option value="DTDC">
                 DTDC
-                <span>₹52</span>
-              </div>
+              </option>
 
-              <div className="courier-card">
+              <option value="Delhivery">
                 Delhivery
-                <span>₹58</span>
-              </div>
+              </option>
 
-              <div className="courier-card">
+              <option value="XpressBees">
                 XpressBees
-                <span>₹61</span>
-              </div>
-
-            </div>
-
+              </option>
+            </select>
           </div>
 
-          {/* Actions */}
-
-          <div className="action-buttons">
-
-            <button
-              type="button"
-              className="draft-btn"
-            >
-              <FaSave />
-              Save Draft
-            </button>
-
-            <button
-              type="submit"
-              className="submit-btn"
-            >
-              <FaTruck />
-              Create Shipment
-            </button>
-
-          </div>
-
+          <button
+            type="submit"
+            className="submit-btn"
+          >
+            Create Shipment
+          </button>
         </form>
-
       </div>
-
     </div>
   );
 };

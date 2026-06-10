@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import AdminSidebar from "../../components/admin/AdminSidebar";
+import api from "../../services/api";
 
 import {
   FaRupeeSign,
@@ -10,14 +12,34 @@ import {
 import "./Admin.css";
 
 const Revenue = () => {
+  const [stats, setStats] = useState({
+    totalRevenue: 0,
+    totalOrders: 0,
+    totalShipments: 0,
+  });
+
+  useEffect(() => {
+    fetchRevenue();
+  }, []);
+
+  const fetchRevenue = async () => {
+    try {
+      const response = await api.get(
+        "/admin/dashboard"
+      );
+
+      setStats(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="admin-dashboard">
 
       <AdminSidebar />
 
       <div className="admin-content">
-
-        {/* Header */}
 
         <div className="page-header">
           <div>
@@ -38,25 +60,25 @@ const Revenue = () => {
           <div className="courier-stat-card">
             <FaRupeeSign className="stat-icon green" />
             <h4>Total Revenue</h4>
-            <h2>₹12.5L</h2>
+            <h2>₹{stats.totalRevenue}</h2>
           </div>
 
           <div className="courier-stat-card">
             <FaChartLine className="stat-icon blue" />
-            <h4>Commission Earned</h4>
-            <h2>₹2.1L</h2>
+            <h4>Total Orders</h4>
+            <h2>{stats.totalOrders}</h2>
           </div>
 
           <div className="courier-stat-card">
             <FaMoneyBillWave className="stat-icon orange" />
-            <h4>COD Revenue</h4>
-            <h2>₹4.3L</h2>
+            <h4>Total Shipments</h4>
+            <h2>{stats.totalShipments}</h2>
           </div>
 
           <div className="courier-stat-card">
             <FaWallet className="stat-icon red" />
             <h4>Pending Settlement</h4>
-            <h2>₹1.2L</h2>
+            <h2>₹0</h2>
           </div>
 
         </div>
@@ -68,31 +90,19 @@ const Revenue = () => {
           <h2>Revenue Performance</h2>
 
           <div className="progress-item">
+
             <div className="progress-header">
-              <span>Monthly Revenue Target</span>
-              <span>82%</span>
+              <span>Revenue Growth</span>
+              <span>100%</span>
             </div>
 
             <div className="progress-bar">
               <div
                 className="progress-fill"
-                style={{ width: "82%" }}
+                style={{ width: "100%" }}
               />
             </div>
-          </div>
 
-          <div className="progress-item">
-            <div className="progress-header">
-              <span>Commission Collection</span>
-              <span>94%</span>
-            </div>
-
-            <div className="progress-bar">
-              <div
-                className="progress-fill"
-                style={{ width: "94%" }}
-              />
-            </div>
           </div>
 
         </div>
@@ -101,40 +111,24 @@ const Revenue = () => {
 
         <div className="admin-table-section">
 
-          <h2>Top Revenue Merchants</h2>
+          <h2>Platform Revenue Summary</h2>
 
           <table className="admin-table">
 
             <thead>
               <tr>
-                <th>Merchant</th>
-                <th>Orders</th>
-                <th>Revenue</th>
-                <th>Commission</th>
+                <th>Total Orders</th>
+                <th>Total Shipments</th>
+                <th>Total Revenue</th>
               </tr>
             </thead>
 
             <tbody>
 
               <tr>
-                <td>ABC Logistics</td>
-                <td>1250</td>
-                <td>₹2.5L</td>
-                <td>₹25,000</td>
-              </tr>
-
-              <tr>
-                <td>FastShip Pvt Ltd</td>
-                <td>980</td>
-                <td>₹1.8L</td>
-                <td>₹18,000</td>
-              </tr>
-
-              <tr>
-                <td>Express Cargo</td>
-                <td>850</td>
-                <td>₹1.3L</td>
-                <td>₹13,000</td>
+                <td>{stats.totalOrders}</td>
+                <td>{stats.totalShipments}</td>
+                <td>₹{stats.totalRevenue}</td>
               </tr>
 
             </tbody>
