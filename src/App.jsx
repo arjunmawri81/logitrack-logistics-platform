@@ -1,13 +1,20 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// Public Pages
+// ======================
+// PUBLIC PAGES
+// ======================
 import Home from "./pages/public/Home";
+import NotFound from "./pages/public/NotFound";
 
-// Auth Pages
+// ======================
+// AUTH PAGES
+// ======================
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 
-// Merchant Pages
+// ======================
+// MERCHANT PAGES
+// ======================
 import Dashboard from "./pages/merchant/Dashboard";
 import Orders from "./pages/merchant/Orders";
 import CreateShipment from "./pages/merchant/CreateShipment";
@@ -19,41 +26,53 @@ import MerchantReports from "./pages/merchant/Reports";
 import Profile from "./pages/merchant/Profile";
 import Settings from "./pages/merchant/Settings";
 
-// Admin Pages
+// ======================
+// ADMIN PAGES
+// ======================
 import AdminDashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Users";
 import Merchants from "./pages/admin/Merchants";
 import Couriers from "./pages/admin/Couriers";
 import Pricing from "./pages/admin/Pricing";
-import Revenue from "./pages/admin/Revenue";
+import AdminRevenue from "./pages/admin/Revenue";
 import AdminReports from "./pages/admin/Reports";
 import AdminSettings from "./pages/admin/Settings";
 import AdminOrders from "./pages/admin/Orders";
 import AdminShipments from "./pages/admin/Shipments";
 
-// Protected Routes
-import AdminRoute from "./routes/AdminRoute";
+// ======================
+// SUPER ADMIN PAGES
+// ======================
+import SuperAdminDashboard from "./pages/superadmin/Dashboard";
+import AdminManagement from "./pages/superadmin/AdminManagement";
+import UserManagement from "./pages/superadmin/UserManagement";
+import OrderManagement from "./pages/superadmin/OrderManagement";
+import MerchantManagement from "./pages/superadmin/MerchantManagement";
+import Commission from "./pages/superadmin/Commission";
+import ApiMonitoring from "./pages/superadmin/ApiMonitoring";
+import Revenue from "./pages/superadmin/Revenue";
+import AuditLogs from "./pages/superadmin/AuditLogs";
+import SuperAdminSettings from "./pages/superadmin/Settings";
+
+// ======================
+// ROUTE PROTECTION
+// ======================
 import MerchantRoute from "./routes/MerchantRoute";
+import AdminRoute from "./routes/AdminRoute";
+import SuperAdminRoute from "./routes/SuperAdminRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-
-        {/* ======================
-            PUBLIC ROUTES
-        ====================== */}
-
+        {/* ================= PUBLIC ================= */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* ======================
-            MERCHANT ROUTES
-        ====================== */}
-
+        {/* ================= MERCHANT ================= */}
         <Route
-          path="/dashboard"
+          path="/merchant/dashboard"
           element={
             <MerchantRoute>
               <Dashboard />
@@ -62,7 +81,7 @@ function App() {
         />
 
         <Route
-          path="/orders"
+          path="/merchant/orders"
           element={
             <MerchantRoute>
               <Orders />
@@ -71,7 +90,7 @@ function App() {
         />
 
         <Route
-          path="/create-shipment"
+          path="/merchant/create-shipment"
           element={
             <MerchantRoute>
               <CreateShipment />
@@ -80,7 +99,7 @@ function App() {
         />
 
         <Route
-          path="/shipments"
+          path="/merchant/shipments"
           element={
             <MerchantRoute>
               <Shipments />
@@ -89,7 +108,7 @@ function App() {
         />
 
         <Route
-          path="/tracking"
+          path="/merchant/tracking"
           element={
             <MerchantRoute>
               <Tracking />
@@ -98,7 +117,7 @@ function App() {
         />
 
         <Route
-          path="/wallet"
+          path="/merchant/wallet"
           element={
             <MerchantRoute>
               <Wallet />
@@ -107,7 +126,7 @@ function App() {
         />
 
         <Route
-          path="/billing"
+          path="/merchant/billing"
           element={
             <MerchantRoute>
               <Billing />
@@ -116,7 +135,7 @@ function App() {
         />
 
         <Route
-          path="/reports"
+          path="/merchant/reports"
           element={
             <MerchantRoute>
               <MerchantReports />
@@ -125,7 +144,7 @@ function App() {
         />
 
         <Route
-          path="/profile"
+          path="/merchant/profile"
           element={
             <MerchantRoute>
               <Profile />
@@ -134,7 +153,7 @@ function App() {
         />
 
         <Route
-          path="/settings"
+          path="/merchant/settings"
           element={
             <MerchantRoute>
               <Settings />
@@ -142,10 +161,7 @@ function App() {
           }
         />
 
-        {/* ======================
-            ADMIN ROUTES
-        ====================== */}
-
+        {/* ================= ADMIN ================= */}
         <Route
           path="/admin/dashboard"
           element={
@@ -174,22 +190,22 @@ function App() {
         />
 
         <Route
-  path="/admin/orders"
-  element={
-    <AdminRoute>
-      <AdminOrders />
-    </AdminRoute>
-  }
-/>
+          path="/admin/orders"
+          element={
+            <AdminRoute>
+              <AdminOrders />
+            </AdminRoute>
+          }
+        />
 
-<Route
-  path="/admin/shipments"
-  element={
-    <AdminRoute>
-      <AdminShipments />
-    </AdminRoute>
-  }
-/>
+        <Route
+          path="/admin/shipments"
+          element={
+            <AdminRoute>
+              <AdminShipments />
+            </AdminRoute>
+          }
+        />
 
         <Route
           path="/admin/couriers"
@@ -213,7 +229,7 @@ function App() {
           path="/admin/revenue"
           element={
             <AdminRoute>
-              <Revenue />
+              <AdminRevenue />
             </AdminRoute>
           }
         />
@@ -236,6 +252,99 @@ function App() {
           }
         />
 
+        {/* ================= SUPER ADMIN ================= */}
+        <Route
+          path="/superadmin/dashboard"
+          element={
+            <SuperAdminRoute>
+              <SuperAdminDashboard />
+            </SuperAdminRoute>
+          }
+        />
+
+        <Route
+          path="/superadmin/admins"
+          element={
+            <SuperAdminRoute>
+              <AdminManagement />
+            </SuperAdminRoute>
+          }
+        />
+
+        <Route
+          path="/superadmin/users"
+          element={
+            <SuperAdminRoute>
+              <UserManagement />
+            </SuperAdminRoute>
+          }
+        />
+
+        <Route
+          path="/superadmin/orders"
+          element={
+            <SuperAdminRoute>
+              <OrderManagement />
+            </SuperAdminRoute>
+          }
+        />
+
+        <Route
+          path="/superadmin/merchants"
+          element={
+            <SuperAdminRoute>
+              <MerchantManagement />
+            </SuperAdminRoute>
+          }
+        />
+
+        <Route
+          path="/superadmin/commission"
+          element={
+            <SuperAdminRoute>
+              <Commission />
+            </SuperAdminRoute>
+          }
+        />
+
+        <Route
+          path="/superadmin/revenue"
+          element={
+            <SuperAdminRoute>
+              <Revenue />
+            </SuperAdminRoute>
+          }
+        />
+
+        <Route
+          path="/superadmin/api-monitoring"
+          element={
+            <SuperAdminRoute>
+              <ApiMonitoring />
+            </SuperAdminRoute>
+          }
+        />
+
+        <Route
+          path="/superadmin/audit-logs"
+          element={
+            <SuperAdminRoute>
+              <AuditLogs />
+            </SuperAdminRoute>
+          }
+        />
+
+        <Route
+          path="/superadmin/settings"
+          element={
+            <SuperAdminRoute>
+              <SuperAdminSettings />
+            </SuperAdminRoute>
+          }
+        />
+
+        {/* ================= 404 ================= */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

@@ -26,10 +26,7 @@ const Login = () => {
 
       const { token, user } = response.data;
 
-      localStorage.setItem(
-        "token",
-        token
-      );
+      localStorage.setItem("token", token);
 
       localStorage.setItem(
         "role",
@@ -41,19 +38,39 @@ const Login = () => {
         JSON.stringify(user)
       );
 
-      if (
-        user.role === "ADMIN" ||
-        user.role === "SUPER_ADMIN"
-      ) {
+      // ROLE BASED REDIRECT
+
+      if (user.role === "SUPER_ADMIN") {
+        navigate("/superadmin/dashboard");
+      }
+
+      else if (user.role === "ADMIN") {
         navigate("/admin/dashboard");
-      } else {
+      }
+
+      else if (user.role === "MERCHANT") {
         navigate("/dashboard");
       }
+
+      else if (user.role === "COURIER") {
+        navigate("/courier/dashboard");
+      }
+
+      else if (user.role === "WAREHOUSE") {
+        navigate("/warehouse/dashboard");
+      }
+
+      else {
+        navigate("/login");
+      }
+
     } catch (error) {
+
       alert(
         error?.response?.data?.message ||
         "Login Failed"
       );
+
     } finally {
       setLoading(false);
     }
